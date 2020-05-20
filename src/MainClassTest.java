@@ -12,7 +12,7 @@ public class MainClassTest {
 
     @Test
     public void testGetClassNumber(){
-        Assert.assertTrue("Method getClassNumber returns number < 45", mainClass.getClassNumber() > 45);
+        Assert.assertTrue("Method getClassNumber returns number <= 45", mainClass.getClassNumber() > 45);
     }
 
     @Test
