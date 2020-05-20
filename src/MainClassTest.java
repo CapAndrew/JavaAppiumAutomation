@@ -18,7 +18,7 @@ public class MainClassTest {
     @Test
     public void testGetClassString(){
         Assert.assertTrue("Method getClassString doesn't return string with 'hello' or 'Hello'",
-                (mainClass.getClassString().contains("hello")||mainClass.getClassString().contains("Hello")));
+                mainClass.getClassString().toLowerCase().contains("hello"));
     }
 
 }
