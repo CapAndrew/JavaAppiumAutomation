@@ -10,10 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class FirstTest {
 
     private AppiumDriver driver;
+    private ArrayList<String> articleList = new ArrayList();
 
     @Before
     public void setUp()throws Exception{
@@ -51,6 +53,53 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void TestCancelSearch(){
+        waitForElementPresentAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresentAndSendsKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search input",
+                "Java",
+                5
+        );
+
+        articleList.add("Island of Indonesia");
+        articleList.add("Programming language");
+        articleList.add("Object-oriented programming language");
+
+        for (String article: articleList
+        ) {
+            waitForElementPresent(
+                    By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = 'Island of Indonesia']"),
+                    "Cannot find article with name "+article,
+                    5
+            );
+        }
+        //Первый клик стирает то, что написано в поиске
+        waitForElementPresentAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot X to cancel search",
+                5
+        );
+        //Второй клик закрывает поиск
+        waitForElementPresentAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot X to cancel search",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find search input",
+                5
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -62,6 +111,12 @@ public class FirstTest {
     private WebElement waitForElementPresentAndClick(By by, String error_message, long timeoutInSeconds){
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.click();
+        return element;
+    }
+
+    private WebElement waitForElementPresentAndSendsKeys(By by, String error_message, String value, long timeoutInSeconds){
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
+        element.sendKeys(value);
         return element;
     }
 }
