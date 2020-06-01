@@ -1,6 +1,7 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -99,6 +100,38 @@ public class FirstTest {
                 5
         );
     }
+
+    @Test
+    public void CheckTextInArticleTitle(){
+        waitForElementPresentAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresentAndSendsKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search input",
+                "JAVA",
+                5
+        );
+
+        for (int i = 1; i <= 3; i++) {
+            WebElement title_article = waitForElementPresent(
+                    By.xpath("(//*[@resource-id = 'org.wikipedia:id/page_list_item_title'])["+i+"]"),
+                    "Cannot find article list",
+                    5
+            );
+
+            String title_article_text = title_article.getAttribute("text");
+
+            Assert.assertEquals(
+                    "Unexpected title",
+                    true,
+                    title_article_text.toLowerCase().contains("java")
+            );
+        }
+}
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
