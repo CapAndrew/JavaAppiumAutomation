@@ -36,49 +36,25 @@ public class FirstTest extends CoreTestCase {
     @Ignore
     @Test
     public void testCancelSearch() {
-        MainPageobject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find search input",
-                5
-        );
-
-        MainPageobject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Cannot find search input",
-                "Java",
-                5
-        );
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
         articleList.add("Island of Indonesia");
         articleList.add("Programming language");
         articleList.add("Object-oriented programming language");
 
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+
         for (String article : articleList
         ) {
-            MainPageobject.waitForElementPresent(
-                    By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '" + article + "']"),
-                    "Cannot find article with name " + article,
-                    5
-            );
+            SearchPageObject.waitForSearchResult(article);
         }
         //Первый клик стирает то, что написано в поиске
-        MainPageobject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_close_btn"),
-                "Cannot X to cancel search",
-                5
-        );
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelSearch();
         //Второй клик закрывает поиск
-        MainPageobject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_close_btn"),
-                "Cannot X to cancel search",
-                5
-        );
-
-        MainPageobject.waitForElementPresent(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find search input",
-                5
-        );
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.waitForCancelButtonToDisappear();
     }
 
     @Ignore
