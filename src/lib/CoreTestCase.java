@@ -28,15 +28,43 @@ public class CoreTestCase extends TestCase {
 
         driver = new AndroidDriver(new URL(AppiumURL), capabilities);
 
-        if(driver.getOrientation() != ScreenOrientation.PORTRAIT){
-            driver.rotate(ScreenOrientation.PORTRAIT);
+        if (driver.getOrientation() != ScreenOrientation.PORTRAIT) {
+           rotateScreenPortrait();
         }
     }
 
     @Override
-    protected void tearDown() throws Exception{
+    protected void tearDown() throws Exception {
         driver.quit();
 
         super.tearDown();
     }
+
+    protected void rotateScreenPortrait(){
+        driver.rotate(ScreenOrientation.PORTRAIT);
+    }
+
+    protected void rotateScreenLandscape(){
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+
+    protected void backgroundApp(int seconds){
+        driver.runAppInBackground(seconds);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

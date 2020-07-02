@@ -14,7 +14,7 @@ public class MainPageObject {
 
     protected AppiumDriver driver;
 
-    public MainPageObject(AppiumDriver driver){
+    public MainPageObject(AppiumDriver driver) {
 
         this.driver = driver;
     }
@@ -124,7 +124,7 @@ public class MainPageObject {
         }
     }
 
-    public void assertElementPresent(By by, String error_message){
+    public void assertElementPresent(By by, String error_message) {
 
         int amount_of_elements = getAmountOfElements(by);
 
@@ -153,7 +153,7 @@ public class MainPageObject {
         searchArticles(search_line);
 
         waitForElementAndClick(
-                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '"+article_name+"']"),
+                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '" + article_name + "']"),
                 "Cannot find article " + article_name,
                 5
         );
