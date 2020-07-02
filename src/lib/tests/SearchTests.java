@@ -2,13 +2,16 @@ package lib.tests;
 
 import lib.CoreTestCase;
 import lib.ui.SearchPageObject;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchTests extends CoreTestCase {
-    private ArrayList<String> articleList = new ArrayList();
+    private ArrayList<String> articleList = new ArrayList<>();
+
+    private HashMap<String, String> search_element = new HashMap<>();
 
     @Test
     public void testSearch() {
@@ -68,5 +71,22 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(search_line);
         SearchPageObject.waitForEmptyResultLabel();
         SearchPageObject.assertThereIsNoResultOfSearch();
+    }
+
+    @Test
+    public void testCheckTitleAndDescriptionOfSearchResult() {
+        search_element.put("Java", "Island of Indonesia");
+        search_element.put("JavaScript", "Programming language");
+        search_element.put("Java (programming language)", "Object-oriented programming language");
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+
+        for (Map.Entry<String, String> entry : search_element.entrySet()
+        ) {
+            SearchPageObject.waitForElementByTitleAndDescription(entry.getKey(), entry.getValue());
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
     }
 }

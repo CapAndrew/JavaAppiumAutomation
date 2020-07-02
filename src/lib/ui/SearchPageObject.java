@@ -13,6 +13,7 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '{SUBSTRING}']",
             SEARCH_RESULT_BY_INDEX_BY_SUBSTRING_TPL = "(//*[@resource-id = 'org.wikipedia:id/page_list_item_title'])[{INDEX}]",
             SEARCH_RESULT_ELEMENT = "//*[@resource-id = 'org.wikipedia:id/search_results_list']/*[@resource-id = 'org.wikipedia:id/page_list_item_container']",
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@resource-id = 'org.wikipedia:id/page_list_item_title' and @text = '{TITLE}']//following-sibling::*[@resource-id = 'org.wikipedia:id/page_list_item_description' and @text = '{DESCRIPTION}']",
             SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text = 'No results found']";
 
     public SearchPageObject(AppiumDriver driver) {
@@ -26,6 +27,10 @@ public class SearchPageObject extends MainPageObject {
 
     private static String getResultSearchElementByIndex(Integer index) {
         return SEARCH_RESULT_BY_INDEX_BY_SUBSTRING_TPL.replace("{INDEX}", index.toString());
+    }
+
+    private static String getResultSearchElementByTitleAndDescription(String title, String description) {
+        return SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL.replace("{TITLE}", title).replace("{DESCRIPTION}", description);
     }
     /*TEMPLATES METHODS*/
 
@@ -63,6 +68,11 @@ public class SearchPageObject extends MainPageObject {
     public void clickByArticleWithSubstring(String substring) {
         String search_result_xpath = getResultSearchElement(substring);
         this.waitForElementAndClick(By.xpath(search_result_xpath), "Cannot find and click search result with substring " + substring, 5);
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description){
+        String search_result_xpath = getResultSearchElementByTitleAndDescription(title, description);
+        this.waitForElementPresent(By.xpath(search_result_xpath), "Cannot find search result with title " + title +" and description " + description, 5);
     }
 
     public int getAmountOfFindArticles() {
