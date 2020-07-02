@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class SearchTests extends CoreTestCase {
     private ArrayList<String> articleList = new ArrayList();
 
-    @Ignore
     @Test
     public void testSearch() {
 
@@ -21,7 +20,6 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
     }
 
-    @Ignore
     @Test
     public void testCancelSearch() {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
@@ -45,11 +43,6 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.waitForCancelButtonToDisappear();
     }
 
-
-
-
-
-    @Ignore
     @Test
     public void testAmountOfNotEmptySearch() {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
@@ -66,7 +59,6 @@ public class SearchTests extends CoreTestCase {
         );
     }
 
-    @Ignore
     @Test
     public void testAmountOfEmptySearch() {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);

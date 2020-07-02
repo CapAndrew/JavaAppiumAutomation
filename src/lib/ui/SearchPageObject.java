@@ -65,7 +65,7 @@ public class SearchPageObject extends MainPageObject {
         this.waitForElementAndClick(By.xpath(search_result_xpath), "Cannot find and click search result with substring " + substring, 5);
     }
 
-    public int getAmountOfFindArticles(){
+    public int getAmountOfFindArticles() {
         this.waitForElementPresent(
                 By.xpath(SEARCH_RESULT_ELEMENT),
                 "Cannot find anything by the request",
@@ -75,11 +75,11 @@ public class SearchPageObject extends MainPageObject {
         return this.getAmountOfElements(By.xpath(SEARCH_RESULT_ELEMENT));
     }
 
-    public void waitForEmptyResultLabel(){
+    public void waitForEmptyResultLabel() {
         this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT), "Cannot find empty result element", 15);
     }
 
-    public void assertThereIsNoResultOfSearch(){
+    public void assertThereIsNoResultOfSearch() {
         this.assertElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not to find any results");
     }
 }

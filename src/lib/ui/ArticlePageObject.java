@@ -14,8 +14,13 @@ public class ArticlePageObject extends MainPageObject {
             ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
             MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
             MY_LIST_OK_BUTTON = "//*[@text = 'OK']",
+            MY_EXITING_LIST_TPL = "//android.widget.TextView[@text = '{FOLDER_NAME}']",
             CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc = 'Navigate up']";
 
+
+    private static String getExsistingListElement(String substring) {
+        return MY_EXITING_LIST_TPL.replace("{FOLDER_NAME}", substring);
+    }
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -38,7 +43,7 @@ public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void addArticleToMyList(String name_of_folder) {
+    public void addArticleToNewMyList(String name_of_folder) {
         this.waitForElementAndClick(
                 By.xpath(OPTIONS_BUTTON),
                 "Cannot find button to open article options",
@@ -76,6 +81,28 @@ public class ArticlePageObject extends MainPageObject {
                 "Cannot press OK button",
                 5
         );
+    }
+
+    public void addArticleToExistsMyList(String name_of_folder) {
+        waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find button to add article to reading list",
+                5
+        );
+
+        String existing_list_xpath = getExsistingListElement(name_of_folder);
+        waitForElementAndClick(
+                By.xpath(existing_list_xpath),
+                "Cannot find existing folder",
+                5
+        );
+
     }
 
     public void closeArticle() {

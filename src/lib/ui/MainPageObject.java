@@ -133,36 +133,4 @@ public class MainPageObject {
             throw new AssertionError(default_message + " " + error_message);
         }
     }
-
-    public void searchArticles(String search_line) {
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Cannot find search input",
-                search_line,
-                5
-        );
-    }
-
-    public void searchArticlesAndOpenOne(String search_line, String article_name) {
-        searchArticles(search_line);
-
-        waitForElementAndClick(
-                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = '" + article_name + "']"),
-                "Cannot find article " + article_name,
-                5
-        );
-
-        waitForElementPresent(
-                By.id("org.wikipedia:id/view_page_title_text"),
-                "Cannot find article title",
-                25
-        );
-
-    }
 }
